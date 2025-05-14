@@ -71,30 +71,31 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final backgroundColor = colorScheme.surface;
-    final foregroundColor = colorScheme.onSurface;
+    final backgroundColor = colorScheme.primaryContainer;
+    final foregroundColor = colorScheme.onPrimaryContainer;
+    final textColor = colorScheme.onSurface;
 
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: colorScheme.surface,
       appBar: MyAppBar(
         title: "rayQ.ai",
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 34,
           fontWeight: FontWeight.bold,
-          color: backgroundColor, // make sure color matches
+          color: textColor, // make sure color matches
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15.0, top: 15.0),
             child: IconButton(
-              icon: Icon(Icons.wb_sunny, color: backgroundColor),
+              icon: Icon(Icons.wb_sunny, color: textColor),
               onPressed: widget.toggleTheme,
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 15.0, top: 15.0),
             child: PopupMenuButton<String>(
-              icon: Icon(Icons.more_vert, color: backgroundColor),
+              icon: Icon(Icons.more_vert, color: textColor),
               onSelected: (value) {
                 if (value == 'about') {
                   Navigator.push(
@@ -143,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: foregroundColor,
+                  color: textColor,
                 ),
                 textAlign: TextAlign.center, // Ensures the text is centered
               ),
@@ -162,8 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: "Call rayQ",
                     icon: Icons.phone,
                     screen: CallScreen(isDarkMode: widget.isDarkMode),
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: colorScheme.onPrimary,
+                    backgroundColor: backgroundColor,
+                    foregroundColor: textColor,
                   ),
                   const SizedBox(width: 20), // Space between buttons
                   _buildButton(
@@ -171,8 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: "Chat with rayQ",
                     icon: Icons.chat_bubble_outline,
                     screen: ChatScreen(isDarkMode: widget.isDarkMode),
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: colorScheme.onPrimary,
+                    backgroundColor: backgroundColor,
+                    foregroundColor: textColor,
                   ),
                 ],
               ),
@@ -183,10 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 50.0, right: 15.0),
         child: FloatingActionButton(
-          backgroundColor: colorScheme.primary,
+          backgroundColor: backgroundColor,
           onPressed: () => _exportHistory(context),
           tooltip: 'Export', // Tooltip that shows on hover or long press
-          child: Icon(Icons.save, color: colorScheme.onPrimary),
+          child: Icon(Icons.save, color: textColor),
         ),
       ),
     );

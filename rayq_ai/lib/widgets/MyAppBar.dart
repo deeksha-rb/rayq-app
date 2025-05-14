@@ -20,7 +20,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: true, // shows back arrow if needed
-      backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.primary,
+      backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.primaryContainer,
       elevation: 0,
       titleSpacing: 0, // very important, removes default extra spacing
       centerTitle: false, // left-align the title

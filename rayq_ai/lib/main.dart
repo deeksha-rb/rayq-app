@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rayq/screens/login_screen.dart';
 import 'package:rayq/utils/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'utils/theme.dart';  // Your custom theme file
+import 'utils/theme.dart';  // custom theme file
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
