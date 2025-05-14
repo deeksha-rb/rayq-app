@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:rayq/services/tts_service.dart';
 import 'package:rayq/screens/chat_screen.dart';
+import 'package:rayq/models/query_model.dart';
+import 'package:rayq/utils/export_conversation.dart';
 
 class CallScreen extends StatefulWidget {
   final bool isDarkMode;
@@ -21,6 +24,7 @@ class _CallScreenState extends State<CallScreen> {
   Timer? timer;
 
   final TTSService _ttsService = TTSService();
+  final List<QueryModel> _conversationHistory = [];
 
   @override
   void initState() {
@@ -97,6 +101,13 @@ class _CallScreenState extends State<CallScreen> {
     _stopListening();
     final response = "$userInput"; // Replace with actual RAG call
     _ttsService.speak(response);
+
+    // Save to conversation history
+    setState(() {
+      _conversationHistory.add(
+        QueryModel(userQuery: userInput, botResponse: response),
+      );
+    });
 
     _ttsService.setCompletionHandler(() {
       if (isCallActive) _startListening();
@@ -176,9 +187,20 @@ class _CallScreenState extends State<CallScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder:
-                              (_) => ChatScreen(isDarkMode: widget.isDarkMode),
+                          builder: (_) =>
+                              ChatScreen(isDarkMode: widget.isDarkMode),
                         ),
+                      );
+                    },
+                  ),
+                  SizedBox(width: 20),
+                  IconButton(
+                    icon: Icon(Icons.download, color: textColor, size: 32),
+                    tooltip: 'Export Conversation',
+                    onPressed: () {
+                      ExportConversation.downloadConversationAsTextFile(
+                        context,
+                        _conversationHistory,
                       );
                     },
                   ),
@@ -186,10 +208,8 @@ class _CallScreenState extends State<CallScreen> {
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     ),
                     onPressed: _endCall,
                     icon: Icon(Icons.call_end, color: Colors.white),
