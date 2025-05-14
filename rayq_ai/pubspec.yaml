@@ -28,6 +28,8 @@ dependencies:
   share_plus: ^7.2.1
   uuid: ^4.2.1
   path_provider: ^2.1.5
+  pdf: ^3.10.4
+  open_file: ^3.3.2
   google_sign_in: ^5.0.7
   flutter_facebook_auth: ^5.0.7
   dynamic_color: ^1.6.6
